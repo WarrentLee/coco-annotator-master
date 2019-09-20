@@ -1,8 +1,8 @@
 FROM nanpelee/pytorch:maskrcnn-v2.0
 
-COPY ./apex /MaskrcnnPytorch/apex
-COPY ./cocoapi /MaskrcnnPytorch/cocoapi
-COPY ./maskrcnn-benchmark /MaskrcnnPytorch/maskrcnn-benchmark
+COPY ./torch_models/apex /MaskrcnnPytorch/apex
+COPY ./torch_models/cocoapi /MaskrcnnPytorch/cocoapi
+COPY ./torch_models/maskrcnn-benchmark /MaskrcnnPytorch/maskrcnn-benchmark
 
 #Build project
 RUN cd cocoapi/PythonAPI && python setup.py build_ext install \

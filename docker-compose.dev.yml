@@ -105,7 +105,7 @@ services:
     networks:
       - cocoannotator
   models:
-    container_name: annotator_models
+    container_name: annotator_torch_env
     build:
       context: .
       dockerfile: ./torch_models/Dockerfile
