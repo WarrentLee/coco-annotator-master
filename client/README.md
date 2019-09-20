@@ -4,8 +4,8 @@
 
 ### Development Mode
 
-`docker-compose up --build`
+`docker-compose up -f docker-compose.dev.yml up --build`
 
 ### Production Mode
 
-`docker-compose up -f docker-compose.prod.yml up --build`
+`docker-compose up --build`

@@ -2,9 +2,9 @@
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="https://github.com/jsbroks/coco-annotator/wiki">Wiki</a> •
-  <a href="https://github.com/jsbroks/coco-annotator/wiki/Getting-Started">Getting Started</a> •
-  <a href="https://github.com/jsbroks/coco-annotator/issues">Issues</a> •
+  <a href="https://github.com/WarrentLee/coco-annotator-master/wiki">Wiki</a> •
+  <a href="https://github.com/WarrentLee/coco-annotator-master/wiki/Getting-Started">Getting Started</a> •
+  <a href="https://github.com/WarrentLee/coco-annotator-master/issues">Issues</a> •
   <a href="#license">License</a>
 </p>
 
