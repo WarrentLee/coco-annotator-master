@@ -74,8 +74,6 @@ For examples and more information check out the [wiki](https://github.com/jsbrok
 | **Username:** admin    |
 | **Password:** password |
 
-https://annotator.justinbrooks.ca/
-
 # Backers
 
 Thanks to the backers for making this project possible!
