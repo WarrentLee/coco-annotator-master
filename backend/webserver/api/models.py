@@ -79,3 +79,19 @@ class MaskRCNN(Resource):
         im = Image.open(args.get('image'))
         coco = maskrcnn.detect(im)
         return {"coco": coco}
+
+#增加的内容
+@api.route('/maskrcnn_pytorch')
+class MaskRCNN_Pytorch(Resource):
+
+    @login_required
+    @api.expect(image_upload)
+    def post(self):
+        """ COCO data test """
+        if not MASKRCNN_LOADED:
+            return {"disabled": True, "coco": {}}
+
+        args = image_upload.parse_args()
+        im = Image.open(args.get('image'))
+        coco = maskrcnn.detect(im)
+        return {"coco": coco}

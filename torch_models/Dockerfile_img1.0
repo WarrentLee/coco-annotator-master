@@ -1,0 +1,55 @@
+ARG CUDA="9.0"
+ARG CUDNN="7"
+
+FROM nvidia/cuda:${CUDA}-cudnn${CUDNN}-devel-ubuntu16.04
+
+COPY ./apex /MaskrcnnPytorch/apex
+COPY ./cocoapi /MaskrcnnPytorch/cocoapi
+COPY ./maskrcnn-benchmark /MaskrcnnPytorch/maskrcnn-benchmark
+COPY ./requirements.yaml /MaskrcnnPytorch/requirements.yaml
+COPY ./jupyter_config.py /MaskrcnnPytorch/jupyter_config.py
+
+#VOLUME "./models":"/MaskrcnnPytorch/models"
+
+# Install Miniconda
+RUN apt-get update && apt-get install -y wget g++ libsm6 libxext6 libxrender-dev\
+    && rm -rf /var/lib/apt/lists/*\
+    && wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+RUN  /bin/bash ./Miniconda3-latest-Linux-x86_64.sh -b -p /miniconda\
+    && rm ./Miniconda3-latest-Linux-x86_64.sh \
+    && echo ". /miniconda/etc/profile.d/conda.sh" >> ~/.bashrc
+
+ENV PATH /miniconda/bin:$PATH
+
+# Create environment
+WORKDIR /MaskrcnnPytorch
+RUN /miniconda/bin/conda install -y conda-build \
+    && /miniconda/bin/conda env create -f requirements.yaml --name maskrcnn \
+    && echo "conda activate maskrcnn" >> ~/.bashrc \
+    && find /miniconda -follow -type f -name '*.a' -delete \
+    && find /miniconda -follow -type f -name '*.js.map' -delete \
+    && /miniconda/bin/conda clean -afy
+
+ENV CONDA_DEFAULT_ENV=maskrcnn
+ENV CONDA_PREFIX=/miniconda/envs/$CONDA_DEFAULT_ENV
+ENV PATH=$CONDA_PREFIX/bin:$PATH
+ENV CONDA_AUTO_UPDATE_CONDA=false
+ENV FORCE_CUDA="1"
+
+#Build project
+RUN cd cocoapi/PythonAPI && python setup.py build_ext install \
+    && cd ../../apex && python setup.py install --cuda_ext --cpp_ext \
+    && cd ../maskrcnn-benchmark && python setup.py build develop
+
+#Run jupyter notebook
+RUN jupyter notebook --generate-config \
+#    && /miniconda/bin/conda activate maskrcnn  \
+    && python -m ipykernel install --user --name maskrcnn --display-name "MaskrcnnPytorch"
+#    && jupyter kernelspec remove python3 -y
+#ENTRYPOINT ["bash", "-c", "jupyter notebook --allow-root -y --no-browser --config=jupyter_config.py"]
+
+
+EXPOSE 50
+
+CMD [ "/bin/bash" ]
