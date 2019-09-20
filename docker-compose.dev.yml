@@ -108,11 +108,11 @@ services:
     container_name: annotator_torch_env
     build:
       context: .
-      dockerfile: ./torch_models/Dockerfile
+      dockerfile: torch_env/Dockerfile
     ports:
       - "5050:50"
     volumes:
-      - "./torch_models/models:/MaskrcnnPytorch/models"
-      - "./torch_models/maskrcnn-benchmark:/MaskrcnnPytorch/maskrcnn-benchmark"
+      - "./torch_env/models:/MaskrcnnPytorch/models"
+      - "./torch_env/maskrcnn-benchmark:/MaskrcnnPytorch/maskrcnn-benchmark"
     networks:
       - cocoannotator
