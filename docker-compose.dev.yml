@@ -77,7 +77,6 @@ services:
     depends_on:
       - messageq
       - database
-      - models
     ports:
       - 5555:5555
     networks:
