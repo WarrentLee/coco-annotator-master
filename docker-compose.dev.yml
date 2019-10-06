@@ -2,6 +2,8 @@ version: "3"
 volumes:
   mongodb_data:
     external: false
+#  nvidia_driver_399.07: # your driver version
+#    external: false
 networks:
   cocoannotator:
     external: false
@@ -114,5 +116,13 @@ services:
     volumes:
       - "./torch_env/models:/MaskrcnnPytorch/models"
       - "./torch_env/maskrcnn-benchmark:/MaskrcnnPytorch/maskrcnn-benchmark"
+#      - "nvidia_driver_399.07:/usr/local/nvidia/:ro"
     networks:
       - cocoannotator
+#    command: nvidia-smi
+#    devices:              #this is required
+#      - /dev/nvidia0       #in general: /dev/nvidia# where # depends on which gpu card is wanted to be used
+#      - /dev/nvidiactl
+#      - /dev/nvidia-uvm
+#      - /dev/nvidia-uvm-tools
+
