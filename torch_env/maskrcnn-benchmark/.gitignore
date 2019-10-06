@@ -2,6 +2,7 @@
 __pycache__
 _ext
 *.pyc
+*.so
 
 maskrcnn_benchmark.egg-info/
 build/
